@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.12;
+pragma solidity ^0.8.0;
 
-contract Vault {
+import "@openzeppelin/contracts/access/Ownable.sol";
+
+contract Vault is Ownable {
     constructor() {}
 
     receive() external payable {}
