@@ -16,7 +16,7 @@ const chainIds = {
   ropsten: 3,
 };
 
-const MNEMONIC = process.env.MNEMONIC || "";
+const MNEMONIC = process.env.MNEMONIC || "cinnamon wolf vital loan buddy tower welcome casino awful medal glory recipe flush cannon midnight polar general tired banner elevator clerk bonus civil find";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY || "";
