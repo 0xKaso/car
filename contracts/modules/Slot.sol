@@ -53,10 +53,10 @@ contract Slot is ISlot {
         return slotsWhite.iswWhite[_slot];
     }
 
-    function getManager() internal virtual returns (address) {}
+    function _getManager() internal virtual returns (address) {}
 
     modifier onlyManager() {
-        require(msg.sender == getManager(), "ERR_NOT_MANAGER");
+        require(msg.sender == _getManager(), "ERR_NOT_MANAGER");
         _;
     }
 }
