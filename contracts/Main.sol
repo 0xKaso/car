@@ -6,8 +6,9 @@ import "@solvprotocol/erc-3525/ERC3525.sol";
 
 import "./vault/Vault.sol";
 import "./modules/Slot.sol";
+import "./subscription/Subscription.sol";
 
-contract ERC3525Mintable is Context, ERC3525, Vault, Slot {
+contract ERC3525Mintable is Context, ERC3525, Vault, Slot, Subscription {
     constructor(string memory name_, string memory symbol_, uint8 decimals_) ERC3525(name_, symbol_, decimals_) {}
 
     function mint(address mintTo_, uint256 tokenId_, uint256 slot_, uint256 value_) public virtual {
@@ -18,7 +19,9 @@ contract ERC3525Mintable is Context, ERC3525, Vault, Slot {
         ERC3525._mintValue(tokenId_, value_);
     }
 
-   function _getManager() internal override view returns (address) {
+   function _getManager() internal override(Subscription,Slot) view returns (address) {
         return owner();
    }
+
+   function _superAdmin() internal override  returns (address) { }
 }
