@@ -6,7 +6,13 @@ import "./ISlot.sol";
 contract Slot is ISlot {
     SlotWhite slotsWhite;
 
-    function addWhiteSlots(uint[] memory _slots) external onlyManager {
+    constructor(){
+        slotsWhite.iswWhite[1] = true;
+        slotsWhite.slots.push(1);
+    }
+
+    // 添加白单插槽
+    function addWhiteSlots(uint[] memory _slots) external onlyManagerOnSlot {
         for (uint i; i < _slots.length; i++) {
             uint s = _slots[i];
             bool added = slotsWhite.iswWhite[s];
@@ -19,7 +25,8 @@ contract Slot is ISlot {
         }
     }
 
-    function removeWhiteSlots(uint[] memory _slots) external onlyManager {
+    // 移除白单插槽
+    function removeWhiteSlots(uint[] memory _slots) external onlyManagerOnSlot {
         for (uint i; i < _slots.length; i++) {
             uint s = _slots[i];
             bool added = slotsWhite.iswWhite[s];
@@ -31,6 +38,7 @@ contract Slot is ISlot {
         }
     }
 
+    // 查询所有的白单插槽
     function queryAllWhiteSlots() external view returns (uint[] memory) {
         uint counter;
 
@@ -49,13 +57,16 @@ contract Slot is ISlot {
         return result;
     }
 
+    // 检查插槽是否是白单
     function checkSlotWhite(uint _slot) public view returns (bool) {
         return slotsWhite.iswWhite[_slot];
     }
 
+    // virtual - 管理员
+    // 配置和移除白单插槽用
     function _getManager() internal virtual returns (address) {}
 
-    modifier onlyManager() {
+    modifier onlyManagerOnSlot() {
         require(msg.sender == _getManager(), "ERR_NOT_MANAGER");
         _;
     }
