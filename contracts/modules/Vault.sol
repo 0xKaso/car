@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "./IVERC721.sol";
+import "../interface/INFT.sol";
 
 contract Vault is Ownable {
     event TokenHasDeposit(address depositer, address token, uint tokenId);
@@ -23,8 +23,8 @@ contract Vault is Ownable {
     // 质押token
     function deposit(address tokenAddr, uint tokenId) external {
         address depositer = _msgSender();
-        IVERC721(tokenAddr).transferFrom(depositer, address(this), tokenId);
-        _addToken(depositer, IVERC721(tokenAddr).symbol(), tokenAddr, tokenId);
+        INFT(tokenAddr).transferFrom(depositer, address(this), tokenId);
+        _addToken(depositer, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
         emit TokenHasDeposit(depositer, tokenAddr, tokenId);
     }
 
@@ -32,7 +32,7 @@ contract Vault is Ownable {
     function unDeposit(address reciver, uint tokenIndex) external {
         DepositToken memory token = depositToken[tokenIndex];
         require(_checkState(), "ERR_INELIGIBILITY");
-        IVERC721(token.tokenAddr).transferFrom(address(this), reciver, token.tokenId);
+        INFT(token.tokenAddr).transferFrom(address(this), reciver, token.tokenId);
         _deleteToken(tokenIndex);
         emit TokenUnDeposit(reciver, token.tokenAddr, token.tokenId);
     }
@@ -45,7 +45,7 @@ contract Vault is Ownable {
     // 管理员领取ERC20代币
     function adminClaim(uint tokenIndex) external onlyOwner {
         DepositToken memory tokenInfo = depositToken[tokenIndex];
-        IVERC721(tokenInfo.tokenAddr).transferFrom(address(this), _msgSender(), tokenInfo.tokenId);
+        INFT(tokenInfo.tokenAddr).transferFrom(address(this), _msgSender(), tokenInfo.tokenId);
     }
 
     // internal - 新增token更新数据

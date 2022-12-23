@@ -31,13 +31,14 @@ contract Subscription {
 
     // 销毁token过期时间 
     function revokeTokenSubscription(uint tokenId) external {
-        delete tokenLifespan[tokenId];
+        require(_ownerOf(tokenId) == msg.sender, "NOT_TOKEN_OWNER");
+        delete tokenLifespan[tokenId];  
         emit SubscribeTokenUpdate(msg.sender, tokenId, tokenLifespan[tokenId]);
     }
 
     // token是否过期
     function hasExpired(uint tokenId) external view returns (bool) {
-        return tokenLifespan[tokenId] >= block.timestamp;
+        return _hasExpired(tokenId);
     }
 
     // token过期时间
@@ -45,9 +46,19 @@ contract Subscription {
         return tokenLifespan[tokenId];
     }
 
+    // // 用户的token是否过期
+    // function _hasExpiredOfOwner(uint tokenId) internal view returns(bool hasExpiredOfOwner){
+    //     hasExpiredOfOwner = _ownerOf(tokenId) == msg.sender && !_hasExpired(tokenId);
+    // }
+
+    function _hasExpired(uint tokenId) internal view returns (bool) {
+        return tokenLifespan[tokenId] <= block.timestamp;
+    }
+
     // virtual - 管理员
     // 用来配置单次订阅周期和价格
     function _getManager() internal virtual returns (address) {}
+    function _ownerOf(uint tokenId) internal view virtual returns (address) {}
 
     // 仅管理员
     modifier onlyManagerOnSub() {
