@@ -8,7 +8,7 @@ import "./modules/Vault.sol";
 import "./modules/Slot.sol";
 import "./modules/Subscription.sol";
 
-contract ERC3525Mintable is Context, ERC3525, Vault, Slot, Subscription {
+contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
     bool hasInit;
 
     function init(
