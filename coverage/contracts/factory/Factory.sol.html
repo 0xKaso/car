@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/3</span>
+        <span class='fraction'>7/7</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -58,7 +58,43 @@
 13
 14
 15
-16</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -66,26 +102,98 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 import "../Main.sol";
+import "../interface/INFT.sol";
 &nbsp;
-contract Factpry {
-    mapping (address =&gt; bool) public isProject;
+contract Factory {
+    mapping(address =&gt; bool) public isProject;
 &nbsp;
-<span class="fstat-no" title="function not covered" >    function create(string memory name_,string memory symbol_,uint8 decimals_) external returns(address){</span>
-<span class="cstat-no" title="statement not covered" >        ERC3525Token eRC3525Token = new ERC3525Token();</span>
-<span class="cstat-no" title="statement not covered" >        eRC3525Token.init(name_, symbol_,decimals_)</span>;
-        isProject[address(eRC3525Token)] = true;
+    struct DepositInfo {
+        address proj;
+        address who;
+        address nft;
+        uint tokenId;
+    }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >        return address(eRC3525Token);</span>
+    mapping(address =&gt; DepositInfo) private projectDepositInfo;
+&nbsp;
+    function getProjctInfo(address proj) external view returns (DepositInfo memory) {
+        return projectDepositInfo[proj];
+    }
+&nbsp;
+    function create(
+        string memory name_,
+        string memory symbol_,
+        uint8 decimals_,
+        address nftAddr,
+        uint tokenId
+    ) external returns (address) {
+        ERC3525Token eRC3525Token = new ERC3525Token();
+        address projectAddr = address(eRC3525Token);
+        eRC3525Token.init(name_, symbol_, decimals_);
+&nbsp;
+        _deposit(projectAddr, nftAddr, tokenId);
+&nbsp;
+        isProject[projectAddr] = true;
+        return projectAddr;
+    }
+&nbsp;
+    function _deposit(
+        address proj,
+        address nftAddr,
+        uint tokenId
+    ) internal {
+        projectDepositInfo[proj].proj = proj;
+        projectDepositInfo[proj].who = msg.sender;
+        projectDepositInfo[proj].nft = nftAddr;
+        projectDepositInfo[proj].tokenId = tokenId;
+&nbsp;
+        INFT(nftAddr).transferFrom(msg.sender, proj, tokenId);
     }
 }
 &nbsp;</pre></td></tr>
@@ -94,7 +202,7 @@ contract Factpry {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 27 2022 16:58:33 GMT+0800 (中国标准时间)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 27 2022 18:28:56 GMT+0800 (中国标准时间)
 </div>
 </div>
 <script src="../../prettify.js"></script>
