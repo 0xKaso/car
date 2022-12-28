@@ -4,8 +4,6 @@ import "../Main.sol";
 import "../interface/INFT.sol";
 
 contract Factory {
-    mapping(address => bool) public isProject;
-
     struct DepositInfo {
         address proj;
         address who;
@@ -13,6 +11,7 @@ contract Factory {
         uint tokenId;
     }
 
+    mapping(address => bool) public isProject;
     mapping(address => DepositInfo) private projectDepositInfo;
 
     function getProjctInfo(address proj) external view returns (DepositInfo memory) {
@@ -28,9 +27,10 @@ contract Factory {
     ) external returns (address) {
         ERC3525Token eRC3525Token = new ERC3525Token();
         address projectAddr = address(eRC3525Token);
+        
         eRC3525Token.init(name_, symbol_, decimals_);
-
         _deposit(projectAddr, nftAddr, tokenId);
+        eRC3525Token.NFT_init(nftAddr,tokenId);
 
         isProject[projectAddr] = true;
         return projectAddr;

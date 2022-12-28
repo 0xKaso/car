@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "../interface/INFT.sol";
 
 contract Vault is Ownable {
+    bool hasReceiveNft;
+
     event TokenHasDeposit(address depositer, address token, uint tokenId);
     event TokenUnDeposit(address reciver, address token, uint tokenId);
 
@@ -19,6 +21,15 @@ contract Vault is Ownable {
     }
 
     mapping(uint => DepositToken) public depositToken;
+
+    // init
+    function NFT_init(address tokenAddr, uint tokenId) external {
+        require(hasReceiveNft == false,"ERR_HAS_INIT_NFT");
+        bool hasReciver = INFT(tokenAddr).ownerOf(tokenId) == address(this);
+        require(hasReciver, "ERR_HAS_NOT_RECIVED");
+        _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
+        hasReceiveNft = true;
+    }
 
     // 质押token
     function deposit(address tokenAddr, uint tokenId) external {
