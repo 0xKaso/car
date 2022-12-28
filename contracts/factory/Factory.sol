@@ -14,23 +14,24 @@ contract Factory {
     mapping(address => bool) public isProject;
     mapping(address => DepositInfo) private projectDepositInfo;
 
-    function getProjctInfo(address proj) external view returns (DepositInfo memory) {
+    function getProjectInfo(address proj) external view returns (DepositInfo memory) {
         return projectDepositInfo[proj];
     }
 
     function create(
         string memory name_,
         string memory symbol_,
-        uint8 decimals_,
         address nftAddr,
-        uint tokenId
+        uint tokenId,
+        uint supply,
+        address receiver
     ) external returns (address) {
         ERC3525Token eRC3525Token = new ERC3525Token();
         address projectAddr = address(eRC3525Token);
-        
-        eRC3525Token.init(name_, symbol_, decimals_);
+
+        eRC3525Token.init(name_, symbol_, supply, receiver);
         _deposit(projectAddr, nftAddr, tokenId);
-        eRC3525Token.NFT_init(nftAddr,tokenId);
+        eRC3525Token.NFT_init(nftAddr, tokenId);
 
         isProject[projectAddr] = true;
         return projectAddr;

@@ -10,24 +10,20 @@ import "./modules/Subscription.sol";
 
 contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
     bool hasInit;
+    uint initSupply;
+    address initReceiver;
 
     function init(
         string memory name_,
         string memory symbol_,
-        uint8 decimals_
+        uint supply_,
+        address receiver
     ) external {
         require(hasInit == false, "ERR_HAS_INITED");
-        _ERC3525_init(name_, symbol_, decimals_);
+        _ERC3525_init(name_, symbol_, 0);
+        initSupply = supply_;
+        initReceiver = receiver;
         hasInit = true;
-    }
-
-    function mint(
-        address mintTo_,
-        uint tokenId_,
-        uint slot_,
-        uint value_
-    ) public virtual {
-        ERC3525._mint(mintTo_, tokenId_, slot_, value_);
     }
 
     function mintValue(uint tokenId_, uint value_) public virtual {
@@ -60,5 +56,10 @@ contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
     // Subscription
     function _ownerOf(uint tokenId) internal view override returns (address) {
         return this.ownerOf(tokenId);
+    }
+
+    // vault
+    function _after_NFT_init() internal override {
+        ERC3525._mint(initReceiver, 1, initSupply);
     }
 }

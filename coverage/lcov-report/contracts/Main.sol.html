@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">16.67% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/12</span>
+        <span class='fraction'>0/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">12.5% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>1/8</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">14.29% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/7</span>
+        <span class='fraction'>0/7</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.75% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/16</span>
+        <span class='fraction'>0/18</span>
       </div>
     </div>
   </div>
@@ -107,7 +107,9 @@
 62
 63
 64
-65</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+65
+66
+67</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -121,13 +123,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,6 +132,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -159,6 +158,11 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -183,24 +187,21 @@ import "./modules/Subscription.sol";
 &nbsp;
 contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
     bool hasInit;
+    uint initSupply;
+    address initReceiver;
 &nbsp;
-    function init(
+<span class="fstat-no" title="function not covered" >    function init(</span>
         string memory name_,
         string memory symbol_,
-        uint8 decimals_
+        uint8 decimals_,
+        uint supply_,
+        address receiver
     ) external {
-        <span class="missing-if-branch" title="else path not taken" >E</span>require(hasInit == false, "ERR_HAS_INITED");
-        _ERC3525_init(name_, symbol_, decimals_);
+<span class="cstat-no" title="statement not covered" >        require(hasInit == false, "ERR_HAS_INITED")</span>;
+<span class="cstat-no" title="statement not covered" >        _ERC3525_init(name_, symbol_, decimals_)</span>;
+        initSupply = supply_;
+        initReceiver = receiver;
         hasInit = true;
-    }
-&nbsp;
-<span class="fstat-no" title="function not covered" >    function mint(</span>
-        address mintTo_,
-        uint tokenId_,
-        uint slot_,
-        uint value_
-    ) public virtual {
-<span class="cstat-no" title="statement not covered" >        ERC3525._mint(mintTo_, tokenId_, slot_, value_)</span>;
     }
 &nbsp;
 <span class="fstat-no" title="function not covered" >    function mintValue(uint tokenId_, uint value_) public virtual {</span>
@@ -234,6 +235,11 @@ contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
 <span class="fstat-no" title="function not covered" >    function _ownerOf(uint tokenId) internal view override returns (address) {</span>
 <span class="cstat-no" title="statement not covered" >        return this.ownerOf(tokenId);</span>
     }
+&nbsp;
+    // vault
+<span class="fstat-no" title="function not covered" >    function _after_NFT_init() internal override {</span>
+<span class="cstat-no" title="statement not covered" >        ERC3525._mint(initReceiver, 1, initSupply)</span>;
+    }
 }
 &nbsp;</pre></td></tr>
 </table></pre>
@@ -241,7 +247,7 @@ contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 27 2022 18:28:56 GMT+0800 (中国标准时间)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Dec 28 2022 16:32:33 GMT+0800 (中国标准时间)
 </div>
 </div>
 <script src="../prettify.js"></script>

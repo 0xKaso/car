@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>7/7</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>0/0</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>0/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>12/12</span>
+        <span class='fraction'>0/13</span>
       </div>
     </div>
   </div>
-  <div class='status-line high'></div>
+  <div class='status-line low'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -94,7 +94,9 @@
 49
 50
 51
-52</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+52
+53
+54</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,9 +113,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,27 +122,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// SPDX-License-Identifier: UNLICENSED
@@ -151,8 +155,6 @@ import "../Main.sol";
 import "../interface/INFT.sol";
 &nbsp;
 contract Factory {
-    mapping(address =&gt; bool) public isProject;
-&nbsp;
     struct DepositInfo {
         address proj;
         address who;
@@ -160,30 +162,34 @@ contract Factory {
         uint tokenId;
     }
 &nbsp;
+    mapping(address =&gt; bool) public isProject;
     mapping(address =&gt; DepositInfo) private projectDepositInfo;
 &nbsp;
-    function getProjctInfo(address proj) external view returns (DepositInfo memory) {
-        return projectDepositInfo[proj];
+<span class="fstat-no" title="function not covered" >    function getProjctInfo(address proj) external view returns (DepositInfo memory) {</span>
+<span class="cstat-no" title="statement not covered" >        return projectDepositInfo[proj];</span>
     }
 &nbsp;
-    function create(
+<span class="fstat-no" title="function not covered" >    function create(</span>
         string memory name_,
         string memory symbol_,
         uint8 decimals_,
         address nftAddr,
-        uint tokenId
+        uint tokenId,
+        uint supply,
+        address receiver
     ) external returns (address) {
-        ERC3525Token eRC3525Token = new ERC3525Token();
-        address projectAddr = address(eRC3525Token);
-        eRC3525Token.init(name_, symbol_, decimals_);
+<span class="cstat-no" title="statement not covered" >        ERC3525Token eRC3525Token = new ERC3525Token();</span>
+<span class="cstat-no" title="statement not covered" >        address projectAddr = address(eRC3525Token);</span>
 &nbsp;
-        _deposit(projectAddr, nftAddr, tokenId);
+<span class="cstat-no" title="statement not covered" >        eRC3525Token.init(name_, symbol_, decimals_,supply,receiver)</span>;
+<span class="cstat-no" title="statement not covered" >        _deposit(projectAddr, nftAddr, tokenId)</span>;
+<span class="cstat-no" title="statement not covered" >        eRC3525Token.NFT_init(nftAddr,tokenId)</span>;
 &nbsp;
         isProject[projectAddr] = true;
-        return projectAddr;
+<span class="cstat-no" title="statement not covered" >        return projectAddr;</span>
     }
 &nbsp;
-    function _deposit(
+<span class="fstat-no" title="function not covered" >    function _deposit(</span>
         address proj,
         address nftAddr,
         uint tokenId
@@ -193,7 +199,7 @@ contract Factory {
         projectDepositInfo[proj].nft = nftAddr;
         projectDepositInfo[proj].tokenId = tokenId;
 &nbsp;
-        INFT(nftAddr).transferFrom(msg.sender, proj, tokenId);
+<span class="cstat-no" title="statement not covered" >        INFT(nftAddr).transferFrom(msg.sender, proj, tokenId)</span>;
     }
 }
 &nbsp;</pre></td></tr>
@@ -202,7 +208,7 @@ contract Factory {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 27 2022 18:28:56 GMT+0800 (中国标准时间)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Dec 28 2022 16:32:33 GMT+0800 (中国标准时间)
 </div>
 </div>
 <script src="../../prettify.js"></script>

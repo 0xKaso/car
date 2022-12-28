@@ -28,6 +28,7 @@ contract Vault is Ownable {
         bool hasReciver = INFT(tokenAddr).ownerOf(tokenId) == address(this);
         require(hasReciver, "ERR_HAS_NOT_RECIVED");
         _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
+        _after_NFT_init();
         hasReceiveNft = true;
     }
 
@@ -79,6 +80,8 @@ contract Vault is Ownable {
     function _deleteToken(uint tokenIndex) internal {
         delete depositToken[tokenIndex];
     }
+
+    function _after_NFT_init() internal virtual {}
 
     // virtual - 检查是否可赎回状态
     function _checkState() internal virtual returns (bool) {}
