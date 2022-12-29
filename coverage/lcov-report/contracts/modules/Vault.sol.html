@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">31.58% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/19</span>
+        <span class='fraction'>6/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">16.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/12</span>
+        <span class='fraction'>2/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">18.18% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/11</span>
+        <span class='fraction'>2/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">46.43% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/28</span>
+        <span class='fraction'>13/28</span>
       </div>
     </div>
   </div>
@@ -167,12 +167,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -210,13 +210,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -264,12 +264,12 @@ contract Vault is Ownable {
     mapping(uint =&gt; DepositToken) public depositToken;
 &nbsp;
     // init
-<span class="fstat-no" title="function not covered" >    function NFT_init(address tokenAddr, uint tokenId) external {</span>
-<span class="cstat-no" title="statement not covered" >        require(hasReceiveNft == false,"ERR_HAS_INIT_NFT")</span>;
-<span class="cstat-no" title="statement not covered" >        bool hasReciver = INFT(tokenAddr).ownerOf(tokenId) == address(this);</span>
-<span class="cstat-no" title="statement not covered" >        require(hasReciver, "ERR_HAS_NOT_RECIVED")</span>;
-<span class="cstat-no" title="statement not covered" >        _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId)</span>;
-<span class="cstat-no" title="statement not covered" >        _after_NFT_init()</span>;
+    function NFT_init(address tokenAddr, uint tokenId) external {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(hasReceiveNft == false,"ERR_HAS_INIT_NFT");
+        bool hasReciver = INFT(tokenAddr).ownerOf(tokenId) == address(this);
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(hasReciver, "ERR_HAS_NOT_RECIVED");
+        _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
+        _after_NFT_init();
         hasReceiveNft = true;
     }
 &nbsp;
@@ -302,13 +302,13 @@ contract Vault is Ownable {
     }
 &nbsp;
     // internal - 新增token更新数据
-<span class="fstat-no" title="function not covered" >    function _addToken(</span>
+    function _addToken(
         address depositer,
         string memory symbol,
         address tokenAddr,
         uint tokenId
     ) internal {
-<span class="cstat-no" title="statement not covered" >        DepositToken storage tokenInfo = depositToken[counter];</span>
+        DepositToken storage tokenInfo = depositToken[counter];
         tokenInfo.depositer = depositer;
         tokenInfo.tokenSymbol = symbol;
         tokenInfo.tokenAddr = tokenAddr;
@@ -343,7 +343,7 @@ contract Vault is Ownable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Dec 28 2022 16:32:33 GMT+0800 (中国标准时间)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 29 2022 15:38:08 GMT+0800 (中国标准时间)
 </div>
 </div>
 <script src="../../prettify.js"></script>

@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/Context.sol";
+// import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
@@ -16,7 +16,7 @@ import "./extensions/IERC721Metadata.sol";
 import "./extensions/IERC3525Metadata.sol";
 import "./periphery/interface/IERC3525MetadataDescriptor.sol";
 
-contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
+contract ERC3525 is IERC3525Metadata, IERC721Enumerable {
     using Strings for address;
     using Strings for uint256;
     using Address for address;
@@ -157,7 +157,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         require(to_ != owner, "ERC3525: approval to current owner");
 
         require(
-            _msgSender() == owner || ERC3525.isApprovedForAll(owner, _msgSender()),
+            msg.sender == owner || ERC3525.isApprovedForAll(owner, msg.sender),
             "ERC3525: approve caller is not owner nor approved for all"
         );
 
@@ -174,7 +174,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         address to_,
         uint256 value_
     ) public payable virtual override returns (uint256) {
-        _spendAllowance(_msgSender(), fromTokenId_, value_);
+        _spendAllowance(msg.sender, fromTokenId_, value_);
 
         uint256 newTokenId = _createDerivedTokenId(fromTokenId_);
         _mint(to_, newTokenId, ERC3525.slotOf(fromTokenId_), 0);
@@ -188,7 +188,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         uint256 toTokenId_,
         uint256 value_
     ) public payable virtual override {
-        _spendAllowance(_msgSender(), fromTokenId_, value_);
+        _spendAllowance(msg.sender, fromTokenId_, value_);
         _transferValue(fromTokenId_, toTokenId_, value_);
     }
 
@@ -202,7 +202,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         address to_,
         uint256 tokenId_
     ) public payable virtual override {
-        require(_isApprovedOrOwner(_msgSender(), tokenId_), "ERC3525: transfer caller is not owner nor approved");
+        require(_isApprovedOrOwner(msg.sender, tokenId_), "ERC3525: transfer caller is not owner nor approved");
         _transferTokenId(from_, to_, tokenId_);
     }
 
@@ -212,7 +212,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         uint256 tokenId_,
         bytes memory data_
     ) public payable virtual override {
-        require(_isApprovedOrOwner(_msgSender(), tokenId_), "ERC3525: transfer caller is not owner nor approved");
+        require(_isApprovedOrOwner(msg.sender, tokenId_), "ERC3525: transfer caller is not owner nor approved");
         _safeTransferTokenId(from_, to_, tokenId_, data_);
     }
 
@@ -229,7 +229,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         require(to_ != owner, "ERC3525: approval to current owner");
 
         require(
-            _msgSender() == owner || ERC3525.isApprovedForAll(owner, _msgSender()),
+            msg.sender == owner || ERC3525.isApprovedForAll(owner, msg.sender),
             "ERC3525: approve caller is not owner nor approved for all"
         );
 
@@ -242,7 +242,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
     }
 
     function setApprovalForAll(address operator_, bool approved_) public virtual override {
-        _setApprovalForAll(_msgSender(), operator_, approved_);
+        _setApprovalForAll(msg.sender, operator_, approved_);
     }
 
     function isApprovedForAll(address owner_, address operator_) public view virtual override returns (bool) {
@@ -563,7 +563,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
         address to = ERC3525.ownerOf(toTokenId_);
         if (to.isContract() && IERC165(to).supportsInterface(type(IERC3525Receiver).interfaceId)) {
             try
-                IERC3525Receiver(to).onERC3525Received(_msgSender(), fromTokenId_, toTokenId_, value_, data_) returns (bytes4 retval) {
+                IERC3525Receiver(to).onERC3525Received(msg.sender, fromTokenId_, toTokenId_, value_, data_) returns (bytes4 retval) {
                 return retval == IERC3525Receiver.onERC3525Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {
@@ -598,7 +598,7 @@ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
     ) private returns (bool) {
         if (to_.isContract() && IERC165(to_).supportsInterface(type(IERC721Receiver).interfaceId)) {
             try 
-                IERC721Receiver(to_).onERC721Received(_msgSender(), from_, tokenId_, data_) returns (bytes4 retval) {
+                IERC721Receiver(to_).onERC721Received(msg.sender, from_, tokenId_, data_) returns (bytes4 retval) {
                 return retval == IERC721Receiver.onERC721Received.selector;
             } catch (bytes memory reason) {
                 if (reason.length == 0) {

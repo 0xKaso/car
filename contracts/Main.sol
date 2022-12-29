@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/Context.sol";
 import "./@solvprotocol/erc-3525/ERC3525.sol";
 
 import "./modules/Vault.sol";
 import "./modules/Slot.sol";
 import "./modules/Subscription.sol";
 
-contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
+contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     bool hasInit;
     uint initSupply;
     address initReceiver;
@@ -17,13 +16,14 @@ contract ERC3525Token is Context, ERC3525, Vault, Slot, Subscription {
         string memory name_,
         string memory symbol_,
         uint supply_,
-        address receiver
+        address admin
     ) external {
         require(hasInit == false, "ERR_HAS_INITED");
         _ERC3525_init(name_, symbol_, 0);
         initSupply = supply_;
-        initReceiver = receiver;
+        initReceiver = admin;
         hasInit = true;
+        _transferOwnership(admin);
     }
 
     function mintValue(uint tokenId_, uint value_) public virtual {
