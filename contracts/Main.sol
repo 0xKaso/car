@@ -10,7 +10,6 @@ import "./modules/Subscription.sol";
 contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     bool hasInit;
     uint initSupply;
-    address initReceiver;
 
     function init(
         string memory name_,
@@ -21,7 +20,6 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
         require(hasInit == false, "ERR_HAS_INITED");
         _ERC3525_init(name_, symbol_, 0);
         initSupply = supply_;
-        initReceiver = admin;
         hasInit = true;
         _transferOwnership(admin);
     }
@@ -60,6 +58,6 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
 
     // vault
     function _after_NFT_init() internal override {
-        ERC3525._mint(initReceiver, 1, initSupply);
+        ERC3525._mint(owner(), 1, initSupply);
     }
 }
