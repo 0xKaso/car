@@ -23,27 +23,27 @@ contract Vault is Ownable {
     mapping(uint => DepositToken) public depositToken;
 
     // init
-    function NFT_init(address tokenAddr, uint tokenId) external {
-        require(hasReceiveNft == false,"ERR_HAS_INIT_NFT");
+    function NFT_init(address tokenAddr, uint tokenId) external returns (uint infoId) {
+        require(hasReceiveNft == false, "ERR_HAS_INIT_NFT");
         bool hasReciver = INFT(tokenAddr).ownerOf(tokenId) == address(this);
         require(hasReciver, "ERR_HAS_NOT_RECIVED");
-        _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
+        infoId = _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
         _after_NFT_init();
         hasReceiveNft = true;
     }
 
     // 质押token
-    function deposit(address tokenAddr, uint tokenId) external {
+    function deposit(address tokenAddr, uint tokenId) external returns (uint infoId) {
         address depositer = _msgSender();
         INFT(tokenAddr).transferFrom(depositer, address(this), tokenId);
-        _addToken(depositer, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
+        infoId = _addToken(depositer, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
         emit TokenHasDeposit(depositer, tokenAddr, tokenId);
     }
 
     // 赎回token
     function unDeposit(address reciver, uint tokenIndex) external {
         DepositToken memory token = depositToken[tokenIndex];
-        require(_checkState(), "ERR_INELIGIBILITY");
+        _checkState();
         INFT(token.tokenAddr).transferFrom(address(this), reciver, token.tokenId);
         _deleteToken(tokenIndex);
         emit TokenUnDeposit(reciver, token.tokenAddr, token.tokenId);
@@ -54,26 +54,22 @@ contract Vault is Ownable {
         reciver.transfer(address(this).balance);
     }
 
-    // 管理员领取ERC20代币
-    function adminClaim(uint tokenIndex) external onlyOwner {
+    // 管理员领取ERC721代币
+    function adminClaimERC721(uint tokenIndex) external onlySuperAdmin {
         DepositToken memory tokenInfo = depositToken[tokenIndex];
         INFT(tokenInfo.tokenAddr).transferFrom(address(this), _msgSender(), tokenInfo.tokenId);
     }
 
     // internal - 新增token更新数据
-    function _addToken(
-        address depositer,
-        string memory symbol,
-        address tokenAddr,
-        uint tokenId
-    ) internal {
+    function _addToken(address depositer, string memory symbol, address tokenAddr, uint tokenId) internal returns (uint infoId) {
         DepositToken storage tokenInfo = depositToken[counter];
         tokenInfo.depositer = depositer;
         tokenInfo.tokenSymbol = symbol;
         tokenInfo.tokenAddr = tokenAddr;
         tokenInfo.tokenId = tokenId;
         tokenInfo.time = block.timestamp;
-        counter++;
+        infoId = counter;
+        counter = counter + 1;
     }
 
     // internal - 删除token销毁数据
@@ -84,10 +80,10 @@ contract Vault is Ownable {
     function _after_NFT_init() internal virtual {}
 
     // virtual - 检查是否可赎回状态
-    function _checkState() internal virtual returns (bool) {}
-    
+    function _checkState() internal virtual {}
+
     // virtual - 超级管理员(平台方)
-    function _superAdmin() internal virtual returns (address) {}
+    function _superAdmin() internal view virtual returns (address) {}
 
     modifier onlySuperAdmin() {
         require(_superAdmin() == _msgSender(), "ERR_NOT_AUTH");

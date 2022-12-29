@@ -3,7 +3,7 @@ import { expect } from "chai";
 import Factory from "./deployer/factory";
 import NFT from "./deployer/nft";
 
-describe("factory", () => {
+describe("factory contract tests", () => {
   let nft;
   let nftAddr;
   let Signers;

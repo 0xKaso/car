@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 
 interface INFT {
-    function symbol() external view returns(string memory);
+    function symbol() external view returns (string memory);
 
     // function balanceOf(address _owner) external view returns (uint256);
 
@@ -15,7 +15,7 @@ interface INFT {
 
     function transferFrom(address _from, address _to, uint256 _tokenId) external payable;
 
-    // function approve(address _approved, uint256 _tokenId) external payable;
+    function approve(address _approved, uint256 _tokenId) external payable;
 
     // function setApprovalForAll(address _operator, bool _approved) external;
 

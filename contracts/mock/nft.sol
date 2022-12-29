@@ -11,10 +11,14 @@ contract NFT is ERC721URIStorage {
 
     constructor() ERC721("GameItem", "ITM") {
         _tokenIds.increment();
-        awardItem(msg.sender, "just for mock nft");
+        mint(msg.sender, "just for mock nft");
+        mint(msg.sender, "just for mock nft");
+        mint(msg.sender, "just for mock nft");
+        mint(msg.sender, "just for mock nft");
+        mint(msg.sender, "just for mock nft");
     }
 
-    function awardItem(address player, string memory tokenURI)
+    function mint(address player, string memory tokenURI)
         public
         returns (uint256)
     {

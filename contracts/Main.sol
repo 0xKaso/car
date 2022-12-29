@@ -7,20 +7,22 @@ import "./modules/Vault.sol";
 import "./modules/Slot.sol";
 import "./modules/Subscription.sol";
 
+interface IFactory {
+    function owner() external view returns (address);
+}
+
 contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     bool hasInit;
     uint initSupply;
 
-    function init(
-        string memory name_,
-        string memory symbol_,
-        uint supply_,
-        address admin
-    ) external {
+    IFactory factory;
+
+    function init(address factory_, string memory name_, string memory symbol_, uint supply_, address admin) external {
         require(hasInit == false, "ERR_HAS_INITED");
         _ERC3525_init(name_, symbol_, 0);
         initSupply = supply_;
         hasInit = true;
+        factory = IFactory(factory_);
         _transferOwnership(admin);
     }
 
@@ -29,20 +31,15 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     }
 
     function _checkTokenStateOfOwner(uint tokenId) internal view returns (bool) {
-        if (_hasExpired(tokenId)) return true; // skip
+        // if (_hasExpired(tokenId)) return true; // skip
         return _ownerOf(tokenId) == msg.sender ? true : false;
     }
 
-    function _checkState() internal view override returns (bool state) {
+    function _checkState() internal view override {
         uint total = supply();
-        state = true;
-        for (uint i; i < total; i++) {
-            if (_checkTokenStateOfOwner(i)) {
-                continue;
-            } else {
-                state = false;
-                break;
-            }
+        for (uint i = 1; i < total; i++) {
+            bool _notOwnerAndNotExpired = _ownerOf(i) != _msgSender() && _hasExpired(i) == false;
+            if (_notOwnerAndNotExpired) revert();
         }
     }
 
@@ -54,6 +51,11 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     // Subscription
     function _ownerOf(uint tokenId) internal view override returns (address) {
         return this.ownerOf(tokenId);
+    }
+
+    // vault
+    function _superAdmin() internal view override returns (address) {
+        return factory.owner();
     }
 
     // vault

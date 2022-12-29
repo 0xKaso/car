@@ -2,8 +2,9 @@
 pragma solidity ^0.8.0;
 import "../Main.sol";
 import "../interface/INFT.sol";
+import "../modules/Ownable.sol";
 
-contract Factory {
+contract Factory is Ownable {
     struct DepositInfo {
         address proj;
         address who;
@@ -18,18 +19,11 @@ contract Factory {
         return projectDepositInfo[proj];
     }
 
-    function create(
-        string memory name_,
-        string memory symbol_,
-        address nftAddr,
-        uint tokenId,
-        uint supply,
-        address receiver
-    ) external returns (address) {
+    function create(string memory name_, string memory symbol_, address nftAddr, uint tokenId, uint supply, address receiver) external returns (address) {
         ERC3525Token eRC3525Token = new ERC3525Token();
         address projectAddr = address(eRC3525Token);
 
-        eRC3525Token.init(name_, symbol_, supply, receiver);
+        eRC3525Token.init(address(this), name_, symbol_, supply, receiver);
         _deposit(projectAddr, nftAddr, tokenId);
         eRC3525Token.NFT_init(nftAddr, tokenId);
 
@@ -37,11 +31,7 @@ contract Factory {
         return projectAddr;
     }
 
-    function _deposit(
-        address proj,
-        address nftAddr,
-        uint tokenId
-    ) internal {
+    function _deposit(address proj, address nftAddr, uint tokenId) internal {
         projectDepositInfo[proj].proj = proj;
         projectDepositInfo[proj].who = msg.sender;
         projectDepositInfo[proj].nft = nftAddr;
