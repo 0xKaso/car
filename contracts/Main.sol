@@ -18,12 +18,13 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     IFactory public factory;
 
     function composeToken(uint[] memory tokens, uint slot) external returns (uint tokenId) {
+        require(iswWhite[slot], "ERR_NOT_WHITE_SLOT");
         uint totalBal;
         for (uint i; i < tokens.length; i++) {
             uint t = tokens[i];
             require(this.ownerOf(t) == _msgSender(), "ERR_NOT_TOKEN_OWNER");
-            uint s = slotOf(t);
-            uint b = balanceOf(t);
+            uint s = this.slotOf(t);
+            uint b = this.balanceOf(t);
             totalBal += s * b;
         }
 

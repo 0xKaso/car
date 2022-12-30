@@ -47,12 +47,40 @@ describe("subscription module tests", () => {
   });
 
   it("raise more token", async () => {
+    const raiseAmount = 100000;
     await token3525
       .connect(Signers[1])
-      .mintValue(100000)
+      .mintValue(raiseAmount)
       .catch(e => {
         expect(e.message).include("Ownable: caller is not the owner");
       });
-    await token3525.mintValue(100000);
+
+    const balb = await token3525["balanceOf(uint256)"](1);
+
+    await token3525.mintValue(raiseAmount); //2
+    const bala = await token3525["balanceOf(uint256)"](1);
+
+    expect(bala - balb).equal(raiseAmount);
+  });
+
+  it("compose single token", async () => {
+    const raiseAmount = 100000;
+    await token3525.addWhiteSlots([5, 4]);
+    await token3525.composeToken([1], 5);
+    const bala = await token3525["balanceOf(uint256)"](2);
+
+    expect((raiseAmount + initSupply) / 5).equal(bala);
+  });
+
+  it("transfer to get new token", async () => {
+    await token3525["transferFrom(uint256,address,uint256)"](1, user, 100);
+    await token3525["transferFrom(uint256,address,uint256)"](2, user, 20);
+    // user have balance total is 200
+  });
+
+  it("compose more token", async () => {
+    await token3525.connect(Signers[1]).composeToken([3, 4], 4);
+    const bal = await token3525["balanceOf(uint256)"](5);
+    expect(200 / 4).equal(bal);
   });
 });
