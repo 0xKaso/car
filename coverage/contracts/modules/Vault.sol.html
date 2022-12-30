@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.33% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>15/18</span>
+        <span class='fraction'>17/17</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">40% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>4/10</span>
+        <span class='fraction'>6/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">54.55% </span>
+        <span class="strong">72.73% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>6/11</span>
+        <span class='fraction'>8/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">86.21% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>25/29</span>
+        <span class='fraction'>29/29</span>
       </div>
     </div>
   </div>
@@ -137,12 +137,7 @@
 92
 93
 94
-95
-96
-97
-98
-99
-100</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+95</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -168,12 +163,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,25 +195,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">8×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -235,8 +225,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -266,8 +256,8 @@ contract Vault is Ownable {
     mapping(uint =&gt; DepositToken) public depositToken;
 &nbsp;
     // init
-    function NFT_init(address tokenAddr, uint tokenId) external returns(uint infoId){
-        <span class="missing-if-branch" title="else path not taken" >E</span>require(hasReceiveNft == false,"ERR_HAS_INIT_NFT");
+    function NFT_init(address tokenAddr, uint tokenId) external returns (uint infoId) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(hasReceiveNft == false, "ERR_HAS_INIT_NFT");
         bool hasReciver = INFT(tokenAddr).ownerOf(tokenId) == address(this);
         <span class="missing-if-branch" title="else path not taken" >E</span>require(hasReciver, "ERR_HAS_NOT_RECIVED");
         infoId = _addToken(msg.sender, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
@@ -276,7 +266,7 @@ contract Vault is Ownable {
     }
 &nbsp;
     // 质押token
-    function deposit(address tokenAddr, uint tokenId) external returns(uint infoId) {
+    function deposit(address tokenAddr, uint tokenId) external returns (uint infoId) {
         address depositer = _msgSender();
         INFT(tokenAddr).transferFrom(depositer, address(this), tokenId);
         infoId = _addToken(depositer, INFT(tokenAddr).symbol(), tokenAddr, tokenId);
@@ -298,26 +288,21 @@ contract Vault is Ownable {
     }
 &nbsp;
     // 管理员领取ERC721代币
-<span class="fstat-no" title="function not covered" >    function adminClaimERC721(uint tokenIndex) external onlyOwner {</span>
-<span class="cstat-no" title="statement not covered" >        DepositToken memory tokenInfo = depositToken[tokenIndex];</span>
-<span class="cstat-no" title="statement not covered" >        INFT(tokenInfo.tokenAddr).transferFrom(address(this), _msgSender(), tokenInfo.tokenId)</span>;
+    function adminClaimERC721(uint tokenIndex) external <span class="missing-if-branch" title="else path not taken" >E</span>onlySuperAdmin {
+        DepositToken memory tokenInfo = depositToken[tokenIndex];
+        INFT(tokenInfo.tokenAddr).transferFrom(address(this), _msgSender(), tokenInfo.tokenId);
     }
 &nbsp;
     // internal - 新增token更新数据
-    function _addToken(
-        address depositer,
-        string memory symbol,
-        address tokenAddr,
-        uint tokenId
-    ) internal returns(uint) {
+    function _addToken(address depositer, string memory symbol, address tokenAddr, uint tokenId) internal returns (uint infoId) {
         DepositToken storage tokenInfo = depositToken[counter];
+        infoId = counter;
         tokenInfo.depositer = depositer;
         tokenInfo.tokenSymbol = symbol;
         tokenInfo.tokenAddr = tokenAddr;
         tokenInfo.tokenId = tokenId;
         tokenInfo.time = block.timestamp;
-        counter++;
-        return counter - 1;
+        counter = counter + 1;
     }
 &nbsp;
     // internal - 删除token销毁数据
@@ -329,12 +314,12 @@ contract Vault is Ownable {
 &nbsp;
     // virtual - 检查是否可赎回状态
 <span class="fstat-no" title="function not covered" >    function _checkState() internal virtual {}</span>
-    
-    // virtual - 超级管理员(平台方)
-<span class="fstat-no" title="function not covered" >    function _superAdmin() internal virtual returns (address) {}</span>
 &nbsp;
-<span class="fstat-no" title="function not covered" >    modifier onlySuperAdmin() {</span>
-<span class="cstat-no" title="statement not covered" >        require(_superAdmin() == _msgSender(), "ERR_NOT_AUTH")</span>;
+    // virtual - 超级管理员(平台方)
+<span class="fstat-no" title="function not covered" >    function _superAdmin() internal view virtual returns (address) {}</span>
+&nbsp;
+    modifier onlySuperAdmin() {
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(_superAdmin() == _msgSender(), "ERR_NOT_AUTH");
         _;
     }
 &nbsp;
@@ -346,7 +331,7 @@ contract Vault is Ownable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Dec 29 2022 18:08:07 GMT+0800 (中国标准时间)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Dec 30 2022 15:29:59 GMT+0800 (中国标准时间)
 </div>
 </div>
 <script src="../../prettify.js"></script>
