@@ -79,6 +79,15 @@ describe("subscription module tests", () => {
   });
 
   it("compose more token", async () => {
+    await token3525.composeToken([3, 4], 4).catch(e => {
+      expect(e.message).include("ERR_NOT_TOKEN_OWNER");
+    });
+    await token3525
+      .connect(Signers[1])
+      .composeToken([3, 4], 3)
+      .catch(e => {
+        expect(e.message).include("ERR_NOT_WHITE_SLOT");
+      });
     await token3525.connect(Signers[1]).composeToken([3, 4], 4);
     const bal = await token3525["balanceOf(uint256)"](5);
     expect(200 / 4).equal(bal);
