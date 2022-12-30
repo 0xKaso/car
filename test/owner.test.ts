@@ -4,7 +4,7 @@ import Factory from "./deployer/factory";
 import NFT from "./deployer/nft";
 import { BigNumber } from "ethers";
 
-describe("vault module tests", () => {
+describe("owner module tests", () => {
   let nft,
     nftAddr,
     defaultTokenId = 1;
@@ -42,14 +42,14 @@ describe("vault module tests", () => {
       .connect(Signers[1])
       .transferOwnership(admin)
       .catch(e => {
-        expect(e.message).to.include("caller is not the owner");
+        expect(e.message).include("caller is not the owner");
       });
   });
 
   it("owner can transfer owner", async () => {
     await token3525.transferOwnership(user);
     const newOwner = await token3525.owner();
-    expect(newOwner).to.equal(user);
+    expect(newOwner).equal(user);
   });
 
   it("owner can renounce Ownership", async () => {

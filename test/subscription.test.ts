@@ -7,7 +7,7 @@ import { BigNumber } from "ethers";
 // 3525 token Info
 // admin - token id - 1
 // user - token id -2
-describe("vault module tests", () => {
+describe("subscription module tests", () => {
   let nft,
     nftAddr,
     defaultTokenId = 1;
@@ -51,7 +51,7 @@ describe("vault module tests", () => {
       .connect(Signers[1])
       .setSubConfig(subConfig)
       .catch(e => {
-        expect(e.message).to.include("ERR_NOT_MANAGER");
+        expect(e.message).include("ERR_NOT_MANAGER");
       });
     await token3525.setSubConfig(subConfig);
   });
@@ -62,7 +62,7 @@ describe("vault module tests", () => {
 
   it("subscript should have enough eth", async () => {
     await token3525.extendTokenSubscription(1, 1).catch(e => {
-      expect(e.message).to.include("ERR_ETHER_NOT_ENOUGH");
+      expect(e.message).include("ERR_ETHER_NOT_ENOUGH");
     });
   });
 
@@ -71,7 +71,7 @@ describe("vault module tests", () => {
     const time = await token3525.tokenExpiration(1);
     const now = new Date();
     const data = time - now.getTime() / 1000;
-    expect(Math.floor(data / month)).to.equal(1);
+    expect(Math.floor(data / month)).equal(1);
   });
 
   it("extend subscription token 12 month and pay 120 wei eth", async () => {
@@ -79,12 +79,12 @@ describe("vault module tests", () => {
     const time = await token3525.tokenExpiration(2);
     const now = new Date();
     const data = time - now.getTime() / 1000;
-    expect(Math.floor(data / month)).to.equal(12);
+    expect(Math.floor(data / month)).equal(12);
   });
 
   it("revoke token who is token owner", async () => {
     await token3525.revokeTokenSubscription(2).catch(e => {
-      expect(e.message).to.include("NOT_TOKEN_OWNER");
+      expect(e.message).include("NOT_TOKEN_OWNER");
     });
   });
 
@@ -95,8 +95,8 @@ describe("vault module tests", () => {
   it("query token is expired", async () => {
     const isExpired1 = await token3525.hasExpired(1);
     const isExpired2 = await token3525.hasExpired(2);
-    expect(isExpired1).to.equal(false);
-    expect(isExpired2).to.equal(true);
+    expect(isExpired1).equal(false);
+    expect(isExpired2).equal(true);
   });
 
   it("revoke all token subscription", async () => {

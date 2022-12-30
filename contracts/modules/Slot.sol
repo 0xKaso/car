@@ -4,22 +4,23 @@ pragma solidity ^0.8.0;
 import "../interface/ISlot.sol";
 
 contract Slot is ISlot {
-    SlotWhite slotsWhite;
+    uint[] slots;
+    mapping(uint => bool) iswWhite;
 
-    constructor(){
-        slotsWhite.iswWhite[1] = true;
-        slotsWhite.slots.push(1);
+    constructor() {
+        iswWhite[1] = true;
+        slots.push(1);
     }
 
     // 添加白单插槽
     function addWhiteSlots(uint[] memory _slots) external onlyManagerOnSlot {
         for (uint i; i < _slots.length; i++) {
             uint s = _slots[i];
-            bool added = slotsWhite.iswWhite[s];
-            require(added, "ERR_SLOT_ADDED");
+            bool isAdded = iswWhite[s];
+            require(isAdded == false, "ERR_SLOT_ADDED");
 
-            slotsWhite.slots.push(s);
-            slotsWhite.iswWhite[s] = true;
+            slots.push(s);
+            iswWhite[s] = true;
 
             emit SlotAdd(msg.sender, s);
         }
@@ -29,10 +30,10 @@ contract Slot is ISlot {
     function removeWhiteSlots(uint[] memory _slots) external onlyManagerOnSlot {
         for (uint i; i < _slots.length; i++) {
             uint s = _slots[i];
-            bool added = slotsWhite.iswWhite[s];
-            require(!added, "ERR_SLOT_NOT_ADDED");
+            bool added = iswWhite[s];
+            require(added == true, "ERR_SLOT_NOT_ADDED");
 
-            slotsWhite.iswWhite[s] = false;
+            iswWhite[s] = false;
 
             emit SlotRemove(msg.sender, s);
         }
@@ -42,16 +43,20 @@ contract Slot is ISlot {
     function queryAllWhiteSlots() external view returns (uint[] memory) {
         uint counter;
 
-        for (uint i; i < slotsWhite.slots.length; i++) {
-            uint s = slotsWhite.slots[i];
-            if (slotsWhite.iswWhite[s]) counter++;
+        for (uint i; i < slots.length; i++) {
+            uint s = slots[i];
+            if (iswWhite[s]) {
+                counter++;
+            }
         }
 
         uint[] memory result = new uint[](counter);
-
-        for (uint i; i < slotsWhite.slots.length; i++) {
-            uint s = slotsWhite.slots[i];
-            if (slotsWhite.iswWhite[s]) result[i] = slotsWhite.slots[i];
+        for (uint j; j < slots.length; j++) {
+            uint s = slots[j];
+            if (iswWhite[s]) {
+                result[counter - 1] = slots[j];
+                counter--;
+            }
         }
 
         return result;
@@ -59,7 +64,7 @@ contract Slot is ISlot {
 
     // 检查插槽是否是白单
     function checkSlotWhite(uint _slot) public view returns (bool) {
-        return slotsWhite.iswWhite[_slot];
+        return iswWhite[_slot];
     }
 
     // virtual - 管理员

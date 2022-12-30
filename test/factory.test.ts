@@ -30,9 +30,9 @@ describe("factory contract tests", () => {
 
     const bal = await Token["balanceOf(uint256)"](1);
 
-    expect(token.proj).to.equal(tokenAddr);
-    expect(token.nft).to.equal(nft.address);
-    expect(token.tokenId).to.equal(1);
-    expect(bal).to.equal(initSupply);
+    expect(token.proj).equal(tokenAddr);
+    expect(token.nft).equal(nft.address);
+    expect(token.tokenId).equal(1);
+    expect(bal).equal(initSupply);
   });
 });

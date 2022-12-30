@@ -43,10 +43,10 @@ describe("vault module tests", () => {
     const bal = await nft.balanceOf(token3525Addr);
     const depositInfo = await token3525.depositToken(infoId);
 
-    expect(bal).to.equal(2);
-    expect(depositInfo.depositer).to.equal(admin);
-    expect(depositInfo.tokenId).to.equal(2);
-    expect(depositInfo.tokenAddr).to.equal(nftAddr);
+    expect(bal).equal(2);
+    expect(depositInfo.depositer).equal(admin);
+    expect(depositInfo.tokenId).equal(2);
+    expect(depositInfo.tokenAddr).equal(nftAddr);
   });
 
   it("send native token to contract", async () => {
@@ -56,7 +56,7 @@ describe("vault module tests", () => {
     });
 
     const b3525 = await ethers.provider.getBalance(token3525Addr);
-    expect(b3525).to.equal(sendValue);
+    expect(b3525).equal(sendValue);
   });
 
   it("manager claim native token", async () => {
@@ -64,12 +64,12 @@ describe("vault module tests", () => {
       .connect(Signers[1])
       .adminClaim(admin)
       .catch(e => {
-        expect(e.message).to.include("caller is not the owner");
+        expect(e.message).include("caller is not the owner");
       });
 
     await token3525.adminClaim(admin);
     const b3525 = await ethers.provider.getBalance(token3525Addr);
-    expect(b3525).to.equal(0);
+    expect(b3525).equal(0);
   });
 
   it("super admin can withdrew token", async () => {
