@@ -63,12 +63,12 @@ contract Vault is Ownable {
     // internal - 新增token更新数据
     function _addToken(address depositer, string memory symbol, address tokenAddr, uint tokenId) internal returns (uint infoId) {
         DepositToken storage tokenInfo = depositToken[counter];
+        infoId = counter;
         tokenInfo.depositer = depositer;
         tokenInfo.tokenSymbol = symbol;
         tokenInfo.tokenAddr = tokenAddr;
         tokenInfo.tokenId = tokenId;
         tokenInfo.time = block.timestamp;
-        infoId = counter;
         counter = counter + 1;
     }
 

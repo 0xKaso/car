@@ -77,10 +77,6 @@ describe("vault module tests", () => {
   });
 
   it("super admin can withdrew token", async () => {
-    const token0Info = await token3525.depositToken(0);
-    const token1Info = await token3525.depositToken(1);
-    console.log(token0Info);
-    console.log(token1Info);
-    await token3525.adminClaimERC721(1);
+    await token3525.adminClaimERC721(0);
   });
 });
