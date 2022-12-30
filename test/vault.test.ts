@@ -72,10 +72,6 @@ describe("vault module tests", () => {
     expect(b3525).to.equal(0);
   });
 
-  it("manager claim ERC721 token when has init", async () => {
-    await token3525.unDeposit(admin, 1);
-  });
-
   it("super admin can withdrew token", async () => {
     await token3525.adminClaimERC721(0);
   });

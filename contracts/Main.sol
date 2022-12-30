@@ -37,9 +37,9 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
 
     function _checkState() internal view override {
         uint total = supply();
-        for (uint i = 1; i < total; i++) {
+        for (uint i = 1; i <= total; i++) {
             bool _notOwnerAndNotExpired = _ownerOf(i) != _msgSender() && _hasExpired(i) == false;
-            if (_notOwnerAndNotExpired) revert();
+            require(_notOwnerAndNotExpired == false, "ERR_NON_CONFORMANCE");
         }
     }
 

@@ -99,7 +99,31 @@ describe("vault module tests", () => {
     expect(isExpired2).to.equal(true);
   });
 
-  //   it("subscription token and pay native token", async () => {
-  //     await token3525.extendTokenSubscription(subConfig);
-  //   });
+  it("revoke all token subscription", async () => {
+    await token3525.connect(Signers[0]).revokeTokenSubscription(1);
+  });
+
+  it("x[1/3] user and admin not expired ", async () => {
+    await token3525.extendTokenSubscription(1, 12, { value: 120 });
+    await token3525.connect(Signers[1]).extendTokenSubscription(2, 12, { value: 120 });
+
+    await token3525.unDeposit(admin, 0).catch(e => {
+      expect(e.message).include("ERR_NON_CONFORMANCE");
+    });
+  });
+
+  it("✓[2/3] user expired but admin not expired", async () => {
+    await token3525.connect(Signers[1]).revokeTokenSubscription(2);
+    await token3525.unDeposit(admin, 0);
+  });
+
+  it("x[3/3] user not expired but admin expired", async () => {
+    await token3525.connect(Signers[1]).extendTokenSubscription(2, 12, { value: 120 });
+    await token3525.revokeTokenSubscription(1);
+
+    await token3525.deposit(nftAddr, 2);
+    await token3525.unDeposit(admin, 1).catch(e => {
+      expect(e.message).include("ERR_NON_CONFORMANCE");
+    });
+  });
 });
