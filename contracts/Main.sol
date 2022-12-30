@@ -26,8 +26,8 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
         _transferOwnership(admin);
     }
 
-    function mintValue(uint tokenId_, uint value_) public virtual {
-        ERC3525._mintValue(tokenId_, value_);
+    function mintValue(uint value_) public onlyOwner {
+        ERC3525._mintValue(1, value_);
     }
 
     function _checkState() internal view override {
