@@ -15,7 +15,22 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     bool hasInit;
     uint initSupply;
 
-    IFactory factory;
+    IFactory public factory;
+
+    function composeToken(uint[] memory tokens, uint slot) external returns (uint tokenId) {
+        uint totalBal;
+        for (uint i; i < tokens.length; i++) {
+            uint t = tokens[i];
+            require(this.ownerOf(t) == _msgSender(), "ERR_NOT_TOKEN_OWNER");
+            uint s = slotOf(t);
+            uint b = balanceOf(t);
+            totalBal += s * b;
+        }
+
+        uint newTokenBal = totalBal / slot;
+        tokenId = _createOriginalTokenId();
+        ERC3525._mint(msg.sender, tokenId, slot, newTokenBal);
+    }
 
     function init(address factory_, string memory name_, string memory symbol_, uint supply_, address admin) external {
         require(hasInit == false, "ERR_HAS_INITED");
