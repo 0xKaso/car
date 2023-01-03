@@ -8,7 +8,8 @@
     "test": "npx hardhat test",
     "clean": "rm -rf ./artifacts ./cache ./typechain ",
     "cov": "hardhat coverage --solcoverjs ./.solcover.js",
-    "format": "prettier --write 'contracts/**/*.sol'"
+    "format": "prettier --write 'contracts/**/*.sol'",
+    "deploy:goerli":"hardhat run scripts/deploy.ts --network goerli"
   },
   "author": "amanusk",
   "license": "MIT",

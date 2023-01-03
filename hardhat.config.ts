@@ -1,7 +1,7 @@
 import { HardhatUserConfig } from "hardhat/config";
 import { NetworkUserConfig } from "hardhat/types";
 import "@nomicfoundation/hardhat-toolbox";
-import "solidity-coverage"
+import "solidity-coverage";
 
 import { config as dotenvConfig } from "dotenv";
 import { resolve } from "path";
@@ -17,20 +17,23 @@ const chainIds = {
   ropsten: 3,
 };
 
-const MNEMONIC = process.env.MNEMONIC || "cinnamon wolf vital loan buddy tower welcome casino awful medal glory recipe flush cannon midnight polar general tired banner elevator clerk bonus civil find";
+const MNEMONIC =
+  process.env.MNEMONIC ||
+  "cinnamon wolf vital loan buddy tower welcome casino awful medal glory recipe flush cannon midnight polar general tired banner elevator clerk bonus civil find";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 const INFURA_API_KEY = process.env.INFURA_API_KEY || "";
 const ALCHEMY_KEY = process.env.ALCHEMY_KEY || "";
 
-function createTestnetConfig(network: keyof typeof chainIds): NetworkUserConfig {
+function createTestnetConfig(network: keyof typeof chainIds): any {
   const url: string = "https://" + network + ".infura.io/v3/" + INFURA_API_KEY;
   return {
-    accounts: {
-      count: 10,
-      initialIndex: 0,
-      mnemonic: MNEMONIC,
-      path: "m/44'/60'/0'/0",
-    },
+    // accounts: {
+    //   count: 10,
+    //   initialIndex: 0,
+    //   mnemonic: MNEMONIC,
+    //   path: "m/44'/60'/0'/0",
+    // },
+    accounts: [MNEMONIC],
     chainId: chainIds[network],
     url,
   };
@@ -43,9 +46,7 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
-      accounts: {
-        mnemonic: MNEMONIC,
-      },
+      accounts: [{ privateKey: MNEMONIC, balance: "10000000000000000000000" }],
       chainId: chainIds.hardhat,
     },
     mainnet: createTestnetConfig("mainnet"),
@@ -60,10 +61,10 @@ const config: HardhatUserConfig = {
         version: "0.8.17",
         settings: {
           optimizer: {
-             enabled: true,
-             runs: 200,
+            enabled: true,
+            runs: 200,
           },
-       },
+        },
       },
     ],
   },
