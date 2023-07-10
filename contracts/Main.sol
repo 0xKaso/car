@@ -15,6 +15,8 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
     bool hasInit;
     uint initSupply;
 
+    string public baseURI;
+
     IFactory public factory;
 
     function composeToken(uint[] memory tokens, uint slot) external returns (uint tokenId) {
@@ -44,6 +46,15 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
 
     function mintValue(uint value_) public onlyOwner {
         ERC3525._mintValue(1, value_);
+    }
+
+    function _baseURI() internal view virtual returns (string memory) {
+        return baseURI;
+    }
+
+    // set baseURI
+    function setBaseURI(string memory baseURI_) external onlyOwner {
+        baseURI = baseURI_;
     }
 
     function _checkState() internal view override {
