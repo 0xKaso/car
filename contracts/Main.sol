@@ -48,7 +48,7 @@ contract ERC3525Token is ERC3525, Vault, Slot, Subscription {
         ERC3525._mintValue(1, value_);
     }
 
-    function _baseURI() internal view virtual returns (string memory) {
+    function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
     }
 

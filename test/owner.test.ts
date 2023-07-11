@@ -17,23 +17,32 @@ describe("owner module tests", () => {
   const initSupply = 100000000;
 
   before(async () => {
+    console.log("debug0");
     nft = await NFT();
     factory = await Factory();
-
+    console.log("debug0-1");
     nftAddr = nft.address;
     factoryAddr = factory.address;
 
+    console.log("debug0-2");
     Signers = await ethers.getSigners();
+    console.log("debug0-3");
     admin = Signers[0].address;
-    user = Signers[1].address;
+    console.log("debug0-4", admin);
+    try {
+      user = Signers[1].address;
+    } catch (error) {
+      console.log(error);
+    }
 
+    console.log("debug1");
     await nft.setApprovalForAll(factoryAddr, true);
 
     token3525Addr = await factory.callStatic.create("Azuki CN", "Azuki", nftAddr, defaultTokenId, initSupply, admin);
     await factory.create("Azuki CN", "Azuki", nftAddr, defaultTokenId, initSupply, admin);
-
+    console.log("debug2");
     token3525 = await ethers.getContractAt("ERC3525Token", token3525Addr);
-
+    console.log("debug3");
     await nft.setApprovalForAll(token3525Addr, true);
   });
 

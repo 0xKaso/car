@@ -71,7 +71,7 @@ describe("subscription module tests", () => {
     const time = await token3525.tokenExpiration(1);
     const now = new Date();
     const data = time - now.getTime() / 1000;
-    expect(Math.floor(data / month)).equal(1);
+    expect(Math.ceil(data / month)).equal(1);
   });
 
   it("extend subscription token 12 month and pay 120 wei eth", async () => {
@@ -79,7 +79,7 @@ describe("subscription module tests", () => {
     const time = await token3525.tokenExpiration(2);
     const now = new Date();
     const data = time - now.getTime() / 1000;
-    expect(Math.floor(data / month)).equal(12);
+    expect(Math.ceil(data / month)).equal(12);
   });
 
   it("revoke token who is token owner", async () => {

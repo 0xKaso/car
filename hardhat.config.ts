@@ -46,7 +46,10 @@ const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
-      accounts: [{ privateKey: MNEMONIC, balance: "10000000000000000000000" }],
+      // accounts: [
+      //   { privateKey: MNEMONIC, balance: "10000000000000000000000" },
+      //   { privateKey: MNEMONIC2, balance: "10000000000000000000000" },
+      // ],
       chainId: chainIds.hardhat,
     },
     mainnet: createTestnetConfig("mainnet"),
